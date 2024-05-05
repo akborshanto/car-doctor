@@ -11,7 +11,7 @@ const Bookings = () => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => setBooking(data));
-  }, []);
+  }, [url]);
   //handle delete click
   const deleteBooking = (id) => {
     //proces //agiye jawa
@@ -34,6 +34,38 @@ const Bookings = () => {
         });
     }
   };
+//handle Booking Confirmarin
+
+const handleBookingConfirm=(id)=>{
+  console.log(id)
+  //proced
+
+  const proced = confirm("Are you sure you want to delete this booking");
+const url=`http://localhost:5000/booking/${id}`
+fetch(url,{
+  method:"PATCH",
+  headers:{"content-type": "application/json"},
+
+  body:JSON.stringify({status:'confirm'})
+})
+.then(res=>res.json())
+.then(data=>{
+console.log(data)
+if(data.modifiedCount >0){
+  //uupdate astae 
+  //understan prolem
+const remaing=booking.filter(booking=>booking._id !== id)
+const updated=booking.find(booking=> booking._id  === id)
+updated.status="confirm"
+const newBOoking=[updated,...remaing]
+setBooking(newBOoking)
+
+}
+
+})
+
+
+}
 
   return (
     <div>
@@ -42,6 +74,7 @@ const Bookings = () => {
           key={Math.random()}
           booking={book}
           deleteBooking={deleteBooking}
+          handleBookingConfirm={handleBookingConfirm}
         ></SingleBook>
       ))}
     </div>
