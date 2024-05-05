@@ -5,6 +5,8 @@ import About from "./../pages/about/About";
 import Login from "../pages/login/Login";
 import Register from "../pages/regeister/Register";
 import CheckOut from "../pages/checkout/CheckOut";
+import Bookings from "../pages/bookings/Bookings";
+import PrivateRoute from "../firebase/Provider/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -19,15 +21,23 @@ export const router = createBrowserRouter([
       //login  and Register page here
       { path: "/login", element: <Login></Login> },
       { path: "/register", element: <Register></Register> },
-      { path: "checkout/:id", element: <CheckOut></CheckOut>
-,loader:({params})=>fetch(`http://localhost:5000/servicess/${params.id}`)
-      }
-      
-      
+      {
+        path: "checkout/:id",
+        element:<PrivateRoute>
+        
+        <CheckOut></CheckOut>
+        </PrivateRoute>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/servicess/${params.id}`),
+      },
 
-
-
+      //booking 
+      { path: "/booking", element:
+      <PrivateRoute>
+      <Bookings></Bookings> 
+      </PrivateRoute>
       
+      },
     ],
   },
 ]);

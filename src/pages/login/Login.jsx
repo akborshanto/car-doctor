@@ -1,8 +1,15 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../firebase/Provider/AuthProvider'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const {signIn}=useContext(AuthContext)
+
+  //location pathname
+  const location=useLocation()
+  //navigate
+  const navigate=useNavigate()
+
 //login with form submission
 const handleLogin=(e)=>{
 
@@ -16,6 +23,8 @@ console.log(userInfo)
 signIn(email,password)
 .then(res=>{
   console.log(res.user)
+  //navigate
+  navigate(location?.state ?location?.state  :'/')
 })
 .catch(err=>{
   console.log(err)

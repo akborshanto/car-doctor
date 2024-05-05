@@ -3,6 +3,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 
@@ -28,27 +29,35 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("current usre",currentUser)
-      setLoading(false)
+      console.log("current usre", currentUser);
+      setLoading(false);
     });
-    //unsubscribe form  when the user is unsubscribed from the auth staete 
+    //unsubscribe form  when the user is unsubscribed from the auth staete
     return () => {
       return unsubscribe();
     };
   }, []);
 
-  //sign in with email and password form login 
-  const signIn=(email,password)=>{
-setLoading(true)
-return signInWithEmailAndPassword(auth,email,password)
+  //sign in with email and password form login
+  const signIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-  }
+  //logout a user when clicked onthe logut out button
+
+  const logOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+
   //here is the defaine auth info provider values
   const authInfo = {
     user,
     loading,
     createUser,
-    signIn
+    signIn,
+    logOut
   };
   return (
     <div>

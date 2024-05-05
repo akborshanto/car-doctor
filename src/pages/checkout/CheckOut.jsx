@@ -4,24 +4,38 @@ import { AuthContext } from "../../firebase/Provider/AuthProvider";
 
 const CheckOut = () => {
   const { user } = useContext(AuthContext);
-const loder=useLoaderData()
-console.log(loder.title)
+  const loder = useLoaderData();
+  console.log(loder.title);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-  //  const email = form.email.value;
-   // const password = form.password.value;
+    const email = form.email.value;
+    // const password = form.password.value;
     const date = form.dates.value;
     const choose = form.choose.value;
+    //all check inforations
     const checkInfo = {
       name,
-
-
-date,
+      email,
+      date,
       choose,
     };
-    console.log(checkInfo);
+
+    //post request to server
+
+fetch('http://localhost:5000/booking',{
+
+method:"POST",
+headers:{'content-type':'application/json'},
+body:JSON.stringify(checkInfo)
+
+})
+.then(res=>res.json())
+.then(data=>console.log(data))
+
+
+
   };
 
   return (
@@ -61,7 +75,7 @@ date,
                   className="input input-bordered"
                   required
                   defaultValue={user?.email}
-                  disabled
+             
                 />
               </div>
               <div className="form-control">
@@ -96,7 +110,7 @@ date,
                   Choose Correct
                 </option>
                 <option value="yes">Yes</option>
-                <option value='no'>No</option>
+                <option value="no">No</option>
               </select>
 
               <div className="form-control mt-6">
