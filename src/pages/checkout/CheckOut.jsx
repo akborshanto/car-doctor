@@ -5,7 +5,8 @@ import { AuthContext } from "../../firebase/Provider/AuthProvider";
 const CheckOut = () => {
   const { user } = useContext(AuthContext);
   const loder = useLoaderData();
-  console.log(loder.title);
+  const {price,title}=loder;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -62,6 +63,8 @@ body:JSON.stringify(checkInfo)
                   placeholder="name"
                   className="input input-bordered"
                   required
+                  defaultValue={title}
+                  disabled
                 />
               </div>
               <div className="form-control">
@@ -75,6 +78,7 @@ body:JSON.stringify(checkInfo)
                   className="input input-bordered"
                   required
                   defaultValue={user?.email}
+                  disabled
              
                 />
               </div>
@@ -100,6 +104,7 @@ body:JSON.stringify(checkInfo)
                   className="input input-bordered"
                   required
                   name="date"
+                  defaultValue={price}
                 />
               </div>
               <select

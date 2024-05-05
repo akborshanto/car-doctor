@@ -1,17 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../firebase/Provider/AuthProvider";
 import SingleBook from "./singleBook/SingleBook";
-
+import axios  from "axios";
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [booking, setBooking] = useState([]);
   //url of email base booking
   const url = `http://localhost:5000/booking?email=${user?.email}`;
+
+
+  
   useEffect(() => {
-    fetch(url)
+
+
+//fetching async await
+
+
+//axios data fetching
+axios.get(url,{withCredential:true})
+.then(res=>setBooking(res.data))
+
+
+    //fethin data simple
+   /*  fetch(url)
       .then((res) => res.json())
-      .then((data) => setBooking(data));
+      .then((data) => setBooking(data)); */
   }, [url]);
+
+
+
+
   //handle delete click
   const deleteBooking = (id) => {
     //proces //agiye jawa

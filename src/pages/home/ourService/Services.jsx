@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Service from "./Service";
+import axios from "axios";
 
 const Services = () => {
   //services state
@@ -8,6 +9,20 @@ const Services = () => {
   
   //fetch the sevices data from the server
   useEffect(() => {
+
+
+
+
+
+// //axios data fetching
+// axios.get('http://localhost:5000/services')
+// .then(res=>{setService(res.data)
+
+
+// })
+// .catch(err=>console.log(err))
+
+//simple data fetching
     fetch("http://localhost:5000/services")
       .then((res) => res.json())
       .then((data) =>setService(data));
